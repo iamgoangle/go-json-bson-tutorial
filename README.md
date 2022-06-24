@@ -1,4 +1,10 @@
+---
+marp: true
+---
+
 # go-json-bson-tutorial
+
+---
 
 # Omitempty State
 ## `common` case
@@ -18,7 +24,12 @@ type User struct {
 | Firstname | ``` &User{Firstname: "golf", IsActive:  true} ``` | {"firstname": "golf", "is_active": true} |
 | **Firstname** | ``` &User{Firstname: "golf", IsActive:  false} ``` | **{"firstname": "golf"}** |
 
+---
+
 ## Simulate User Request Payload
+
+---
+
 ### User: Checked IsActive
 ```
 &User{
@@ -29,6 +40,8 @@ type User struct {
 // output
 {"firstname":"golf","IsActive":true}
 ```
+
+---
 
 ### User: Unchecked IsActive
 In this case you will see that your field `is_active` is missing. Since omitempty will ignore you field once reach zero-value.
@@ -46,6 +59,8 @@ In this case you will see that your field `is_active` is missing. Since omitempt
 {"firstname":"golf"}
 ```
 
+---
+
 ### To solve above case
 **Add pointer to your type**
 
@@ -55,6 +70,8 @@ type User struct {
 	IsActive  *bool    `json:"is_active,omitempty"`
 }
 ```
+
+---
 
 **`true` case**
 
@@ -69,6 +86,8 @@ isActive := true
 {"firstname":"golf","is_active":true}
 ```
 
+---
+
 **`false` case**
 
 ```
@@ -82,6 +101,8 @@ isActive := false
 {"firstname":"golf","is_active":false}
 ```
 
+---
+
 **`zero value` case**
 
 hit `omitempty`
@@ -94,6 +115,8 @@ hit `omitempty`
 // output
 {"firstname":"golf"}
 ```
+
+---
 
 ## omitempty tag
 The purpose of `omitempty` tag is ignoring empty field.
